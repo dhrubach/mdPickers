@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
@@ -8,10 +8,18 @@ var gulp = require('gulp'),
     sourcemaps = require('gulp-sourcemaps'),
     wrap = require('gulp-wrap'),
     concat = require('gulp-concat'),
-    path = require('path');
+    eslint = require('gulp-eslint');
 
 var outputFolder = 'dist/';
-var moduleName = 'mdPickers';
+
+gulp.task('lint', function() {
+    return gulp.src([
+        'gulpfile.js',
+        'src/**/*.js'
+    ]).pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failOnError());
+});
 
 gulp.task('assets', function() {
   return gulp.src('src/components/**/*.less')
@@ -23,7 +31,7 @@ gulp.task('assets', function() {
         .pipe(gulp.dest(outputFolder));
 });
 
-gulp.task('build-app', function() {  
+gulp.task('build-app', ['lint'], function() {
     return gulp.src(['src/mdPickers.js', 'src/components/**/*.js'])
         .pipe(concat('mdPickers.js'))
         .pipe(wrap('(function() {\n"use strict";\n<%= contents %>\n})();'))
