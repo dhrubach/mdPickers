@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="mdDatePickerDemoApp">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Material Design Date Picker Demo</title>
+
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css" type="text/css"/>
+    <link rel="stylesheet" href="styles/mdPickers.css" type="text/css"/>
+    <link rel="stylesheet" href="styles/app.css" type="text/css"/>
+</head>
+<body>
+
+<section flex ng-controller="mdDatePickerDemoController as vm" class="md-whiteframe-z1">
+    <div layout="row" layout-align="center center" layout-margin layout-padding>
+        <div flex>
+            <md-toolbar class="md-primary md-hue-1">
+                <div class="md-toolbar-tools" layout-align="center center">
+                    <h4>mdDatePicker</h4>
+                </div>
+            </md-toolbar>
+            <md-content>
+                <md-input-container>
+                    <label>From Date</label>
+                    <input md-date-picker ng-model="vm.selectedDate" type="date"/>
+                </md-input-container>
+                <md-subheader class="md-accent">
+                    Formatted Date (DD/MM/YYYY): {{vm.formattedDate}}
+                </md-subheader>
+            </md-content>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-animate/angular-animate.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-aria/angular-aria.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-material/angular-material.min.js"></script>
+<script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+<script type="text/javascript" src="js/mdPickers.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/app.controller.js"></script>
+
+</body>
+</html>
