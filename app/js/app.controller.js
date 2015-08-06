@@ -1,14 +1,14 @@
 /**
  * Created by Dhruba on 03-Aug-15.
  */
-(function () {
+define(['angular', 'moment', 'src/app.module'], function (angular, moment, demoApp) {
     'use strict';
 
-    angular
-        .module('mdDatePickerDemoApp')
-        .controller('mdDatePickerDemoController', mdDatePickerDemoController);
+    var controller = demoApp.controller('mdDatePickerDemoController', mdDatePickerDemoController);
 
-    mdDatePickerDemoController.$inject = ['$scope'];
+    controller.$inject = ['$scope'];
+
+    return controller;
 
     function mdDatePickerDemoController($scope) {
         var vm = this;
@@ -23,4 +23,4 @@
             }
         });
     }
-})();
+});

@@ -38,7 +38,7 @@ gulp.task('assets', function() {
 gulp.task('build-app', function() {
     return gulp.src(['src/mdPickers.js', 'src/components/**/*.js'])
         .pipe(concat('mdPickers.js'))
-        .pipe(wrap('(function() {\n"use strict";\n<%= contents %>\n})();'))
+        .pipe(wrap('(function(window) {\n\'use strict\';\n<%= contents %>\n})(window);'))
         .pipe(sourcemaps.init())
         .pipe(gulp.dest(outputFolder))
         .pipe(gulp.dest(demoAppFolder + 'js'))
