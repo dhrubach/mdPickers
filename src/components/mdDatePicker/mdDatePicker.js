@@ -1,64 +1,77 @@
 
 function factory(angular, moment) {
 
-    module.controller('DatePickerCtrl', ['$scope', '$mdDialog', 'currentDate', '$mdMedia', function ($scope, $mdDialog, currentDate, $mdMedia) {
-        var self = this;
+    angular.module("mdPickers")
+        .controller('DatePickerController', DatePickerController)
+        .factory('$mdDatePicker', DatePickerFactory)
+        .directive('mdDatePicker', DatePickerDirective);
 
-        this.currentDate = currentDate;
-        this.currentMoment = moment(self.currentDate);
-        this.weekDays = moment.weekdaysMin();
+    DatePickerController.$inject = ['$mdDialog', 'currentDate', '$mdMedia'];
 
-        $scope.$mdMedia = $mdMedia;
-        $scope.yearsOptions = [];
-        for (var i = 1900; i <= (this.currentMoment.year() + 12); i++) {
-            $scope.yearsOptions.push(i);
+    function DatePickerController($mdDialog, currentDate, $mdMedia) {
+        var vm = this;
+
+        vm.currentDate = currentDate;
+        vm.currentMoment = moment(vm.currentDate);
+        vm.weekDays = moment.weekdaysMin();
+        vm.$mdMedia = $mdMedia;
+
+        vm.yearsOptions = [];
+        for (var i = 1900; i <= vm.currentMoment.year() + 12; i++) {
+            vm.yearsOptions.push(i);
         }
-        $scope.year = this.currentMoment.year();
+        vm.year = vm.currentMoment.year();
 
-        this.setYear = function () {
-            self.currentMoment.year($scope.year);
+        vm.setYear = function () {
+            vm.currentMoment.year(vm.year);
         };
 
-        this.selectDate = function (dom) {
-            self.currentMoment.date(dom);
+        vm.selectDate = function (dom) {
+            vm.currentMoment.date(dom);
         };
 
-        this.cancel = function () {
+        vm.cancel = function () {
             $mdDialog.cancel();
         };
 
-        this.confirm = function () {
-            $mdDialog.hide(this.currentMoment.toDate());
+        vm.confirm = function () {
+            $mdDialog.hide(vm.currentMoment.toDate());
         };
 
-        this.getDaysInMonth = function () {
-            var days = self.currentMoment.daysInMonth(),
-                firstDay = moment(self.currentMoment).date(1).day();
+        vm.getDaysInMonth = function () {
+            var days = vm.currentMoment.daysInMonth(),
+                firstDay = moment(vm.currentMoment).date(1).day();
 
             var arr = [];
-            for (var i = 1; i <= (firstDay + days); i++)
-                arr.push(i > firstDay ? (i - firstDay) : false);
+            for (var i = 1; i <= firstDay + days; i++) {
+                arr.push(i > firstDay ? i - firstDay : false);
+            }
 
             return arr;
         };
 
-        this.nextMonth = function () {
-            self.currentMoment.add(1, 'months');
-            $scope.year = self.currentMoment.year();
+        vm.nextMonth = function () {
+            vm.currentMoment.add(1, 'months');
+            vm.year = vm.currentMoment.year();
         };
 
-        this.prevMonth = function () {
-            self.currentMoment.subtract(1, 'months');
-            $scope.year = self.currentMoment.year();
+        vm.prevMonth = function () {
+            vm.currentMoment.subtract(1, 'months');
+            vm.year = vm.currentMoment.year();
         };
-    }]);
+    }
 
-    module.factory("$mdDatePicker", ["$mdDialog", function ($mdDialog) {
+    DatePickerFactory.$inject = ['$mdDialog'];
+
+    function DatePickerFactory($mdDialog) {
+
         var datePicker = function (targetEvent, currentDate) {
-            if (!angular.isDate(currentDate)) currentDate = Date.now();
+            if (!angular.isDate(currentDate)) {
+                currentDate = Date.now();
+            }
 
             return $mdDialog.show({
-                controller: 'DatePickerCtrl',
+                controller: 'DatePickerController',
                 controllerAs: 'datepicker',
                 template: '<md-dialog aria-label="" class="md-datepicker" ng-class="{ \'portrait\': !$mdMedia(\'gt-md\') }">' +
                 '<md-dialog-content layout="row" layout-wrap>' +
@@ -67,8 +80,8 @@ function factory(angular, moment) {
                 '<md-toolbar layout-align="center center" class="md-datepicker-date md-hue-1 md-primary" layout="column">' +
                 '<div class="md-datepicker-month">{{ datepicker.currentMoment.format("MMM") }}</div>' +
                 '<div class="md-datepicker-day">{{ datepicker.currentMoment.format("DD") }}</div>' +
-                '<md-select class="md-datepicker-year" placeholder="{{ datepicker.currentMoment.format(\'YYYY\') }}" ng-model="year" ng-change="datepicker.setYear()">' +
-                '<md-option ng-value="year" ng-repeat="year in yearsOptions">{{ year }}</md-option>' +
+                '<md-select class="md-datepicker-year" placeholder="{{ datepicker.currentMoment.format(\'YYYY\') }}" ng-model="datepicker.year" ng-change="datepicker.setYear()">' +
+                '<md-option ng-value="year" ng-repeat="year in datepicker.yearsOptions">{{ year }}</md-option>' +
                 '</md-select>' +
                 '</md-toolbar>' +
                 '</div>' +
@@ -99,12 +112,14 @@ function factory(angular, moment) {
                     currentDate: currentDate
                 }
             });
-        }
+        };
 
         return datePicker;
-    }]);
+    }
 
-    module.directive("mdDatePicker", ["$mdDatePicker", "$timeout", function ($mdDatePicker, $timeout) {
+    DatePickerDirective.$inject = ['$mdDatePicker', '$timeout'];
+
+    function DatePickerDirective($mdDatePicker, $timeout) {
         return {
             restrict: 'A',
             require: '?ngModel',
@@ -122,7 +137,7 @@ function factory(angular, moment) {
                 }
             }
         }
-    }]);
+    }
 }
 
 if (typeof define === 'function' && define.amd) {

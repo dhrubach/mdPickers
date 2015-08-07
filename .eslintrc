@@ -22,7 +22,6 @@
 	"no-undef": 1,
 	"no-undefined": 1,
 	"no-unused-vars": 1,
-	"no-use-before-define": 1,
 	"new-cap": 0,
 	"angular/ng_angularelement": 1,
 	"angular/ng_controller_as": 1,
@@ -32,7 +31,9 @@
 	"angular/ng_no_digest": 2,
 	"angular/ng_no_service_method": 1,
 	"angular/ng_timeout_service": 1,
-	"angular/ng_typecheck_date": 1
+	"angular/ng_typecheck_date": 1,
+	"angular/ng_window_service": 0,
+	"angular/ng_typecheck_function": 0
   },
   "env": {
 	"amd": true,
@@ -40,6 +41,8 @@
   },
   "globals": {
 	"angular": false,
-	"moment": false
+	"moment": false,
+	"window": false,
+	"module": false
   }
 }

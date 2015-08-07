@@ -1,5 +1,6 @@
-var module = angular.module("mdPickers", [
+
+angular.module("mdPickers", [
 	"ngMaterial",
 	"ngAnimate",
 	"ngAria"
-]); 
+]);
