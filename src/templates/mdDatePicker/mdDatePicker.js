@@ -19,7 +19,10 @@ angular.module('mdPickers.templates', []).run(['$templateCache', function($templ
     '                <md-button aria-label="mese precedente" class="md-icon-button" ng-click="datepicker.prevMonth()">\n' +
     '                    <md-icon md-font-set="material-icons">chevron_left</md-icon>\n' +
     '                </md-button>\n' +
-    '                {{ datepicker.currentMoment.format("MMMM YYYY") }}\n' +
+    '                <md-select class="md-datepicker-month" placeholder="{{ datepicker.currentMoment.format(\'MMMM\') }}"\n' +
+    '                           ng-model="datepicker.month" ng-change="datepicker.setMonth()">\n' +
+    '                    <md-option ng-value="month" ng-repeat="month in datepicker.monthOptions">{{ month }}</md-option>\n' +
+    '                </md-select>\n' +
     '                <md-button aria-label="mese successivo" class="md-icon-button" ng-click="datepicker.nextMonth()">\n' +
     '                    <md-icon md-font-set="material-icons">chevron_right</md-icon>\n' +
     '                </md-button>\n' +

@@ -25,7 +25,10 @@
     '                <md-button aria-label="mese precedente" class="md-icon-button" ng-click="datepicker.prevMonth()">\n' +
     '                    <md-icon md-font-set="material-icons">chevron_left</md-icon>\n' +
     '                </md-button>\n' +
-    '                {{ datepicker.currentMoment.format("MMMM YYYY") }}\n' +
+    '                <md-select class="md-datepicker-month" placeholder="{{ datepicker.currentMoment.format(\'MMMM\') }}"\n' +
+    '                           ng-model="datepicker.month" ng-change="datepicker.setMonth()">\n' +
+    '                    <md-option ng-value="month" ng-repeat="month in datepicker.monthOptions">{{ month }}</md-option>\n' +
+    '                </md-select>\n' +
     '                <md-button aria-label="mese successivo" class="md-icon-button" ng-click="datepicker.nextMonth()">\n' +
     '                    <md-icon md-font-set="material-icons">chevron_right</md-icon>\n' +
     '                </md-button>\n' +
@@ -88,6 +91,13 @@ function DatePickerController($mdDialog, currentDate, $mdMedia) {
         vm.currentMoment.year(vm.year);
     };
 
+    vm.monthOptions = Array.apply(0, Array(12)).map(function(val,i){return moment().month(i).format('MMMM')});
+    vm.month = vm.currentMoment.format('MMMM');
+
+    vm.setMonth = function() {
+        vm.currentMoment.month(vm.month);
+    };
+
     vm.selectDate = function (dom) {
         vm.currentMoment.date(dom);
     };
@@ -115,11 +125,13 @@ function DatePickerController($mdDialog, currentDate, $mdMedia) {
     vm.nextMonth = function () {
         vm.currentMoment.add(1, 'months');
         vm.year = vm.currentMoment.year();
+        vm.month = vm.currentMoment.format('MMMM');
     };
 
     vm.prevMonth = function () {
         vm.currentMoment.subtract(1, 'months');
         vm.year = vm.currentMoment.year();
+        vm.month = vm.currentMoment.format('MMMM');
     };
 }
 

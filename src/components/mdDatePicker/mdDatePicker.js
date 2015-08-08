@@ -24,6 +24,13 @@ function DatePickerController($mdDialog, currentDate, $mdMedia) {
         vm.currentMoment.year(vm.year);
     };
 
+    vm.monthOptions = Array.apply(0, Array(12)).map(function(val,i){return moment().month(i).format('MMMM')});
+    vm.month = vm.currentMoment.format('MMMM');
+
+    vm.setMonth = function() {
+        vm.currentMoment.month(vm.month);
+    };
+
     vm.selectDate = function (dom) {
         vm.currentMoment.date(dom);
     };
@@ -51,11 +58,13 @@ function DatePickerController($mdDialog, currentDate, $mdMedia) {
     vm.nextMonth = function () {
         vm.currentMoment.add(1, 'months');
         vm.year = vm.currentMoment.year();
+        vm.month = vm.currentMoment.format('MMMM');
     };
 
     vm.prevMonth = function () {
         vm.currentMoment.subtract(1, 'months');
         vm.year = vm.currentMoment.year();
+        vm.month = vm.currentMoment.format('MMMM');
     };
 }
 
