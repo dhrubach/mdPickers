@@ -1,0 +1,18 @@
+
+(function(window) {
+    'use strict';
+
+    function factory(angular, moment) {
+
+        <%= contents %>
+    }
+
+    if (typeof define === 'function' && define.amd) {
+        /* AMD module */
+        define(['angular', 'moment'], factory);
+    } else {
+        /* Browser global */
+        factory(window.angular, window.moment);
+    }
+
+})(window);
