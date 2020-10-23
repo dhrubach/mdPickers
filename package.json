@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/alenaksu/mdPickers",
   "devDependencies": {
-    "eslint": "^1.0.0",
+    "eslint": "^7.11.0",
     "eslint-plugin-angular": "^0.2.0",
     "gulp": "^3.8.11",
     "gulp-concat": "^2.5.2",
